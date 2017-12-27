@@ -5,25 +5,29 @@
  */
 package dados;
 
-import java.awt.List;
+import java.util.HashMap;
+import java.util.Map;
 import negocio.Docente;
 
 
 public class DocenteDAO {
+    
+    static Map<String,Docente>docentes = new HashMap();
+    
     //TODO:atualizar no vpp o argumento
     public static Docente get(String nomeUtilizador) {
-		throw new UnsupportedOperationException();
+		return docentes.get(nomeUtilizador);
 	}
-
+    //WARNING: n faz clone
 	public static void put(Docente docente) {
-		throw new UnsupportedOperationException();
+		docentes.put(docente.getNomeUtilizador(),docente);
 	}
 
-	public static boolean existeDocente(String aNomeUtilizador) {
-		throw new UnsupportedOperationException();
+	public static boolean existeDocente(String nomeUtilizador) {
+		return docentes.containsKey(nomeUtilizador);
 	}
 
 	public static void atualizarDocente(Docente docente) {
-		throw new UnsupportedOperationException();
+		put(docente);
 	}
 }

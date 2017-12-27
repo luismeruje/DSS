@@ -4,24 +4,28 @@
  * and open the template in the editor.
  */
 package dados;
+import java.util.HashMap;
+import java.util.Map;
 import negocio.Aluno;
 
 public class AlunoDAO {
+    
+    static Map<String,Aluno>alunos = new HashMap();
     //TODO:Alterar argumento no vpp
     public static Aluno get(String nomeUtilizador) {
-        throw new UnsupportedOperationException();
+        return alunos.get(nomeUtilizador);
+    }
+//WARNIN:Não faz clone
+    public static void put(Aluno aluno) {
+        alunos.put(aluno.getNomeUtilizador(),aluno);
     }
 
-    public static void put(Aluno aAluno) {
-        throw new UnsupportedOperationException();
+    public static boolean existeAluno(String nomeUtilizador) {
+        return alunos.containsKey(nomeUtilizador);
     }
 
-    public static boolean existeAluno(String aNomeUtilizador) {
-        throw new UnsupportedOperationException();
-    }
-
-    public static void atualizar(Aluno aAluno) {
-	throw new UnsupportedOperationException();
+    public static void atualizar(Aluno aluno) {
+	put(aluno);
     }
 
     public static void atualizarPropostas(Aluno aAluno) {
