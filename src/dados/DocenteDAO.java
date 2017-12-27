@@ -8,6 +8,7 @@ package dados;
 import java.util.HashMap;
 import java.util.Map;
 import negocio.Docente;
+import negocio.UtilizadorJaRegistadoException;
 
 
 public class DocenteDAO {
@@ -19,8 +20,10 @@ public class DocenteDAO {
 		return docentes.get(nomeUtilizador);
 	}
     //WARNING: n faz clone
-	public static void put(Docente docente) {
-		docentes.put(docente.getNomeUtilizador(),docente);
+	public static void put(Docente docente)throws UtilizadorJaRegistadoException {
+            if(docentes.containsKey(docente.getNomeUtilizador()))
+                throw new UtilizadorJaRegistadoException();
+            docentes.put(docente.getNomeUtilizador(),docente);
 	}
 
 	public static boolean existeDocente(String nomeUtilizador) {
@@ -28,6 +31,6 @@ public class DocenteDAO {
 	}
 
 	public static void atualizarDocente(Docente docente) {
-		put(docente);
+		docentes.put(docente.getNomeUtilizador(),docente);
 	}
 }

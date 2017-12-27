@@ -12,8 +12,9 @@ public class GestorTurnos {
     
     //TODO: inserir método no vpp
     
-    public static void inserirAdministrador(String nomeUtilizador, String password){
+    public static void inserirAdministrador(String nomeUtilizador, String password)throws UtilizadorJaRegistadoException{
         Admin administrador = new Admin(nomeUtilizador,password);
+        AdminDAO.put(administrador);
     }
     //TODO: meter exceptions no vpp
     public static Utilizador login(String nomeUtilizador, String password) throws PasswordIncorretaException,ContaInexistenteException{
@@ -27,6 +28,7 @@ public class GestorTurnos {
         
         Docente docente = DocenteDAO.get(nomeUtilizador);
         if(docente != null){
+            System.out.println("b");
             if(!verificaPassword(docente,password))
                 throw new PasswordIncorretaException();
             else
@@ -35,6 +37,7 @@ public class GestorTurnos {
         
         Admin admin = AdminDAO.get(nomeUtilizador);
         if(admin!=null){
+            System.out.println("c");
             if(!verificaPassword(admin,password))
                 throw new PasswordIncorretaException();
             else

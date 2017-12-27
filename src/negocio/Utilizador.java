@@ -13,10 +13,11 @@ public abstract class Utilizador {
         private String password;
 	private String nome;
 
-    public Utilizador(String nomeUtilizador, String password, String nome) {
+    public Utilizador(String nome, String nomeUtilizador, String password) {
+        this.nome = nome;
         this.nomeUtilizador = nomeUtilizador;
         this.password = password;
-        this.nome = nome;
+        
     }
 
         

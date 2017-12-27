@@ -16,7 +16,9 @@ public class AdminDAO {
         return administradores.get(nomeUtilizador);
     }
 
-    public static void put(Admin administrador) {
+    public static void put(Admin administrador)throws UtilizadorJaRegistadoException {
+        if(administradores.containsKey(administrador.getNomeUtilizador()))
+            throw new UtilizadorJaRegistadoException();
 	administradores.put(administrador.getNomeUtilizador(),administrador);
     }
 
@@ -25,6 +27,6 @@ public class AdminDAO {
     }
 
     public static void atualizarAdmin(Admin administrador) {
-        put(administrador);
+        administradores.put(administrador.getNomeUtilizador(),administrador);
     }
 }
