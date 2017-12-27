@@ -7,24 +7,23 @@ package dados;
 
 import java.awt.List;
 import negocio.Docente;
-/**
- *
- * @author LuisFerreira
- */
+
+
 public class DocenteDAO {
-    public Docente get() {
+    //TODO:atualizar no vpp o argumento
+    public static Docente get(String nomeUtilizador) {
 		throw new UnsupportedOperationException();
 	}
 
-	public void put(Docente docente) {
+	public static void put(Docente docente) {
 		throw new UnsupportedOperationException();
 	}
 
-	public boolean existeDocente(String aNomeUtilizador) {
+	public static boolean existeDocente(String aNomeUtilizador) {
 		throw new UnsupportedOperationException();
 	}
 
-	public void atualizarDocente(Docente docente) {
+	public static void atualizarDocente(Docente docente) {
 		throw new UnsupportedOperationException();
 	}
 }

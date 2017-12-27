@@ -18,7 +18,7 @@ public class Aluno extends Utilizador{
         this.estatuto=estatuto;
     }
     
-    //TODO:Alterar nome do método para este no vpp
+    //TODO:Alterar nome do método para está no vpp
     public boolean getEstatuto() {
 	return estatuto;
     }

@@ -7,12 +7,7 @@ package interfaceUtilizador;
 
 import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
-import negocio.GestorTurnos;
-import negocio.Admin;
-import negocio.Aluno;
-import negocio.Docente;
-import negocio.Utilizador;
-        
+import negocio.*;
 
 
 public class GUILogin extends javax.swing.JFrame {
@@ -44,7 +39,7 @@ public class GUILogin extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("NomeUtilizador:");
+        jLabel1.setText("Nome Utilizador:");
 
         jLabel2.setText("Password:");
 
@@ -98,7 +93,7 @@ public class GUILogin extends javax.swing.JFrame {
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(277, Short.MAX_VALUE)
+                .addContainerGap(281, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(IniciarSessao1, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -139,18 +134,20 @@ public class GUILogin extends javax.swing.JFrame {
     }//GEN-LAST:event_NomeUtilizadorTextFieldActionPerformed
 
     private void IniciarSessao1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IniciarSessao1ActionPerformed
-        Utilizador utilizador = GestorTurnos.login(NomeUtilizadorTextField.getText(),PasswordTextField.getText());
-        JFrame novoUserFrame = null;
-        if(utilizador instanceof Aluno)
-            novoUserFrame = new AreaAlunoGUI((Aluno) utilizador);
-        else if(utilizador instanceof Docente)
-            novoUserFrame = new AreaDocenteGUI((Docente) utilizador);
-        else if (utilizador instanceof Admin)
-            novoUserFrame = new AreaAdministradorGUI((Admin) utilizador);
-        
-        
-        novoUserFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        novoUserFrame.setVisible(true);
+        try{
+            Utilizador utilizador = GestorTurnos.login(NomeUtilizadorTextField.getText(),PasswordTextField.getText());
+            JFrame novoUserFrame = null;
+            if(utilizador instanceof Aluno)
+                novoUserFrame = new AreaAlunoGUI((Aluno) utilizador);
+            else if(utilizador instanceof Docente)
+                novoUserFrame = new AreaDocenteGUI((Docente) utilizador);
+            else if (utilizador instanceof Admin)
+                novoUserFrame = new AreaAdministradorGUI((Admin) utilizador);
+            novoUserFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            novoUserFrame.setVisible(true);
+        }
+        catch(PasswordIncorretaException e){}
+        catch(ContaInexistenteException e){}
     }//GEN-LAST:event_IniciarSessao1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
