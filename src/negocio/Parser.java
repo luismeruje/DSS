@@ -42,4 +42,26 @@ public class Parser{
         }
         return docentes;
     }
+    
+    public static List<UC> parseFicheiroUCs(String path)throws IOException, FicheiroCorrompidoException{
+        List<UC> ucs = new ArrayList();
+        List<String> linhas = Files.readAllLines(Paths.get(path));
+        linhas.remove(0);
+        linhas.remove(linhas.size()-1);
+        linhas.remove(linhas.size()-1);
+        for(String s: linhas){
+            String[]aux = s.split(",");     
+            if (aux.length != 3)
+                throw new FicheiroCorrompidoException();
+            for(int i = 0;i<aux.length;i++){
+                aux[i]=aux[i].trim();
+                aux[i]=aux[i].replaceAll("[\'\\(\\)]","");
+         
+            }
+            int semestre=Integer.parseInt(aux[0].substring(0,aux[0].indexOf('N')).replaceAll("[^0-9]",""))%100;
+            ucs.add(new UC( aux[1],semestre));
+            System.out.println(aux[1]+semestre);
+        }
+        return ucs;
+    }
 }

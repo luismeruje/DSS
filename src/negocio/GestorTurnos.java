@@ -61,6 +61,28 @@ public class GestorTurnos {
         return jaRegistados;
     }
     
+    public static void inserirUC(String nome, int semestre) throws UCJaRegistadaException{
+        UCTurnoDAO.put(new UC(nome,semestre));
+    }
+    
+    
+    public static List<String> inserirUCs(String path) throws IOException,FicheiroCorrompidoException{
+        List<UC> ucs = Parser.parseFicheiroUCs(path);
+        List<String> jaRegistadas = null;
+        for(UC u: ucs){
+            try{
+                GestorTurnos.inserirUC(u.getNome(),u.getSemestre());
+            }
+            catch(UCJaRegistadaException e){
+                if(jaRegistadas == null){
+                    jaRegistadas = new ArrayList();
+                }
+                jaRegistadas.add(u.getNome());
+            }
+        }
+        return jaRegistadas;
+    }
+    
     //TODO: meter exceptions no vpp
     public static Utilizador login(String nomeUtilizador, String password) throws PasswordIncorretaException,ContaInexistenteException{
         Aluno aluno = AlunoDAO.get(nomeUtilizador);

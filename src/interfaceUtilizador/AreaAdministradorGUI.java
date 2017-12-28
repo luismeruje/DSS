@@ -56,6 +56,11 @@ public class AreaAdministradorGUI extends javax.swing.JFrame {
         });
 
         jButton3.setText("Gerir UC's");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton4.setText("Logout");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
@@ -121,6 +126,12 @@ public class AreaAdministradorGUI extends javax.swing.JFrame {
         novoUserFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         novoUserFrame.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        JFrame novoUserFrame = new GerirUCsGUI();
+        novoUserFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        novoUserFrame.setVisible(true);
+    }//GEN-LAST:event_jButton3ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
