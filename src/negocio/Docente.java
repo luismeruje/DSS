@@ -5,15 +5,15 @@
  */
 package negocio;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Iterator;
 
 
 //Mudar para idTurnos vpp.
 public class Docente extends Utilizador{
-    private ArrayList<Par<String,Integer>> idTurnos;
-    //private ArrayList<NotificacaoPresenca> notificacoesPresenca;
-    //private ArrayList notificacoes = new ArrayList<NotificacaoPresenca>();
+    //TODO: ter a certeza que em baixo é criado um objeto, null exception
+    private List<Par<String,Integer>> idTurnos = null;
+    //private List<NotificacaoPresenca> notificacoes = new ArrayList<NotificacaoPresenca>();
     public Docente(String nome,String nomeUtilizador,String password){
         super(nome,nomeUtilizador,password);
     }

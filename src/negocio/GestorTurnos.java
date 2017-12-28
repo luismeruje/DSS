@@ -21,18 +21,41 @@ public class GestorTurnos {
         AdminDAO.put(administrador);
     }
     
+    public static void inserirAluno(String nome, String nomeUtilizador, String password, Boolean estatuto) throws UtilizadorJaRegistadoException{
+        AlunoDAO.put(new Aluno(nome,nomeUtilizador,password,estatuto));
+    }
+    
     public static List<String> inserirAlunos(String path) throws IOException,FicheiroCorrompidoException{
         List<Aluno> alunos = Parser.parseFicheiroAlunos(path);
         List<String> jaRegistados = null;
         for(Aluno a: alunos){
             try{
-                AlunoDAO.put(a);
+                GestorTurnos.inserirAluno(a.getNome(),a.getNomeUtilizador(),a.getPassword(),a.getEstatuto());
             }
             catch(UtilizadorJaRegistadoException e){
                 if(jaRegistados == null){
                     jaRegistados = new ArrayList();
                 }
                 jaRegistados.add(a.getNomeUtilizador());
+            }
+        }
+        return jaRegistados;
+    }
+    public static void inserirDocente(String nome, String nomeUtilizador, String password) throws UtilizadorJaRegistadoException{
+        DocenteDAO.put(new Docente(nome,nomeUtilizador,password));
+    }
+    public static List<String> inserirDocentes(String path) throws IOException, FicheiroCorrompidoException{
+        List<Docente> docentes = Parser.parseFicheiroDocentes(path);
+        List<String> jaRegistados = null;
+        for(Docente d: docentes){
+            try{
+                GestorTurnos.inserirDocente(d.getNome(),d.getNomeUtilizador(),d.getPassword());
+            }
+            catch(UtilizadorJaRegistadoException e){
+                if(jaRegistados == null){
+                    jaRegistados = new ArrayList();
+                }
+                jaRegistados.add(d.getNomeUtilizador());
             }
         }
         return jaRegistados;

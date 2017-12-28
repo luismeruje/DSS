@@ -29,4 +29,17 @@ public class Parser{
         }
         return alunos;
     }
+    
+    public static List<Docente> parseFicheiroDocentes(String path) throws IOException, FicheiroCorrompidoException{
+        List<Docente> docentes = new ArrayList();
+        List<String> linhas =Files.readAllLines(Paths.get(path));
+        
+        for(String s:linhas){
+            String[] aux = s.split(":");
+            if(aux.length!=3)
+                throw new FicheiroCorrompidoException();
+            docentes.add(new Docente(aux[0],aux[1],aux[2]));
+        }
+        return docentes;
+    }
 }

@@ -6,7 +6,13 @@
 package interfaceUtilizador;
 
 import java.awt.event.WindowEvent;
+import java.io.IOException;
+import java.util.List;
+import javax.swing.JDialog;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import negocio.FicheiroCorrompidoException;
+import negocio.GestorTurnos;
 
 /**
  *
@@ -111,7 +117,19 @@ public class AdicionarDocentesGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_ficheiroTextFieldActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        //TODO: GestorTurnos.adicionarDocentes(ficheiroTextField.getText());
+        try{
+            List<String> jaRegistados = GestorTurnos.inserirDocentes(ficheiroTextField.getText());
+            if(jaRegistados != null){
+                JDialog novoDialog = new UtilizadoresJaRegistadosJDialog(this,true,jaRegistados);
+                novoDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+                novoDialog.setVisible(true);
+            }
+            dispose();
+        }
+        catch(IOException e){}
+        catch(FicheiroCorrompidoException e){
+            JOptionPane.showMessageDialog(this,"Ficheiro corrompido.","Erro",JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

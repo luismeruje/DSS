@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.List;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import negocio.FicheiroCorrompidoException;
 import negocio.GestorTurnos;
 
@@ -120,8 +121,10 @@ public class AdicionarAlunosGUI extends javax.swing.JFrame {
             }
             dispose();
         }
-        catch(IOException e){System.out.println("a");}
-        catch(FicheiroCorrompidoException e){System.out.println("b");}
+        catch(IOException e){}
+        catch(FicheiroCorrompidoException e){
+            JOptionPane.showMessageDialog(this,"Ficheiro corrompido.","Erro",JOptionPane.ERROR_MESSAGE);
+        }
         
         
     }//GEN-LAST:event_adicionarButtonActionPerformed
