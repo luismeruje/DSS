@@ -3,10 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package negocio;
+package dados;
 
 import java.util.HashMap;
 import java.util.Map;
+import negocio.Admin;
+import negocio.UtilizadorJaRegistadoException;
 
 public class AdminDAO {
     static Map<String,Admin>administradores=new HashMap();
@@ -18,7 +20,7 @@ public class AdminDAO {
 
     public static void put(Admin administrador)throws UtilizadorJaRegistadoException {
         if(administradores.containsKey(administrador.getNomeUtilizador()))
-            throw new UtilizadorJaRegistadoException();
+            throw new UtilizadorJaRegistadoException(administrador.getNomeUtilizador());
 	administradores.put(administrador.getNomeUtilizador(),administrador);
     }
 

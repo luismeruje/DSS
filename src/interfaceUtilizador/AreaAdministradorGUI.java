@@ -8,10 +8,7 @@ import javax.swing.JFrame;
  * and open the template in the editor.
  */
 
-/**
- *
- * @author LuisFerreira
- */
+
 import negocio.Admin;
 public class AreaAdministradorGUI extends javax.swing.JFrame {
 
@@ -107,7 +104,10 @@ public class AreaAdministradorGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        System.exit(0);
+        JFrame novoUserFrame = new GUILogin();
+        novoUserFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        novoUserFrame.setVisible(true);
+        dispose();
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

@@ -19,7 +19,7 @@ public class AlunoDAO {
 //WARNIN:Não faz clone
     public static void put(Aluno aluno) throws UtilizadorJaRegistadoException{
         if(alunos.containsKey(aluno.getNomeUtilizador()))
-            throw new UtilizadorJaRegistadoException();
+            throw new UtilizadorJaRegistadoException(aluno.getNomeUtilizador());
 	alunos.put(aluno.getNomeUtilizador(),aluno);
     }
 

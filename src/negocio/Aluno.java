@@ -5,12 +5,12 @@
  */
 package negocio;
 
-import java.awt.List;
+import java.util.List;
 
 
 public class Aluno extends Utilizador{
-    private List codTurnos=null;
-    private List propostas=null;
+    private List<Par<String,Integer>> idTurnos=null;
+    private List<Integer> propostas=null;
     private boolean estatuto;
     
     public Aluno(String nome, String nomeUtilizador,String password, boolean estatuto){
@@ -18,7 +18,7 @@ public class Aluno extends Utilizador{
         this.estatuto=estatuto;
     }
     
-    //TODO:Alterar nome do método para está no vpp
+    //TODO:Alterar nome do método no vpp
     public boolean getEstatuto() {
 	return estatuto;
     }

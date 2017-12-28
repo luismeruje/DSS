@@ -6,7 +6,12 @@
 package interfaceUtilizador;
 
 import java.awt.event.WindowEvent;
+import java.io.IOException;
+import java.util.List;
+import javax.swing.JDialog;
 import javax.swing.JFileChooser;
+import negocio.FicheiroCorrompidoException;
+import negocio.GestorTurnos;
 
 /**
  *
@@ -47,6 +52,11 @@ public class AdicionarAlunosGUI extends javax.swing.JFrame {
         });
 
         jButton1.setText("Cancelar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         adicionarButton.setText("Adicionar");
         adicionarButton.addActionListener(new java.awt.event.ActionListener() {
@@ -100,7 +110,20 @@ public class AdicionarAlunosGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void adicionarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adicionarButtonActionPerformed
-        //Chamar adicionarAlunos no GestorTurnos;
+        try{
+            List<String> jaRegistados = GestorTurnos.inserirAlunos(ficheiroTextField.getText());
+            if(jaRegistados != null){
+                
+                JDialog novoDialog = new UtilizadoresJaRegistadosJDialog(this,true,jaRegistados);
+                novoDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+                novoDialog.setVisible(true);
+            }
+            dispose();
+        }
+        catch(IOException e){System.out.println("a");}
+        catch(FicheiroCorrompidoException e){System.out.println("b");}
+        
+        
     }//GEN-LAST:event_adicionarButtonActionPerformed
 
     private void pathButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pathButtonActionPerformed
@@ -112,6 +135,10 @@ public class AdicionarAlunosGUI extends javax.swing.JFrame {
     private void ficheiroTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ficheiroTextFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_ficheiroTextFieldActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     private void fecharJanela(){
         this.dispatchEvent(new WindowEvent(this,WindowEvent.WINDOW_CLOSING));

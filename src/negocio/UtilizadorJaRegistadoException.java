@@ -15,8 +15,7 @@ public class UtilizadorJaRegistadoException extends Exception {
      * Creates a new instance of <code>UtilizadorJaRegistadoException</code>
      * without detail message.
      */
-    public UtilizadorJaRegistadoException() {
-    }
+
 
     /**
      * Constructs an instance of <code>UtilizadorJaRegistadoException</code>
@@ -24,7 +23,7 @@ public class UtilizadorJaRegistadoException extends Exception {
      *
      * @param msg the detail message.
      */
-    public UtilizadorJaRegistadoException(String msg) {
-        super(msg);
+    public UtilizadorJaRegistadoException(String nomeUtilizador) {
+        super(nomeUtilizador);
     }
 }

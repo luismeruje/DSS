@@ -17,6 +17,7 @@ public class GUILogin extends javax.swing.JFrame {
      */
     public GUILogin() {
         initComponents();
+        
     }
 
     /**
@@ -143,20 +144,23 @@ public class GUILogin extends javax.swing.JFrame {
                 novoUserFrame = new AreaDocenteGUI((Docente) utilizador);
             else if (utilizador instanceof Admin)
                 novoUserFrame = new AreaAdministradorGUI((Admin) utilizador);
+            dispose();
             novoUserFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             novoUserFrame.setVisible(true);
+  
         }
         catch(PasswordIncorretaException e){}
         catch(ContaInexistenteException e){}
     }//GEN-LAST:event_IniciarSessao1ActionPerformed
-
+   
+    
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         System.exit(0);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try{GestorTurnos.inserirAdministrador(NomeUtilizadorTextField.getText(),PasswordTextField.getText());}
-        catch(UtilizadorJaRegistadoException e){System.out.println("a");}
+        catch(UtilizadorJaRegistadoException e){}
     }//GEN-LAST:event_jButton1ActionPerformed
     
     

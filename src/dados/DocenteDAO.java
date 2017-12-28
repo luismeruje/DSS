@@ -22,7 +22,7 @@ public class DocenteDAO {
     //WARNING: n faz clone
 	public static void put(Docente docente)throws UtilizadorJaRegistadoException {
             if(docentes.containsKey(docente.getNomeUtilizador()))
-                throw new UtilizadorJaRegistadoException();
+                throw new UtilizadorJaRegistadoException(docente.getNomeUtilizador());
             docentes.put(docente.getNomeUtilizador(),docente);
 	}
 
