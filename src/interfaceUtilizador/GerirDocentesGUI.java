@@ -73,7 +73,7 @@ public class GerirDocentesGUI extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        jButton1.setText("Novo");
+        jButton1.setText("Adicionar Docentes");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -110,10 +110,10 @@ public class GerirDocentesGUI extends javax.swing.JFrame {
                                 .addComponent(jLabel2)
                                 .addGap(66, 66, 66)
                                 .addComponent(jLabel3)))
-                        .addGap(0, 254, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(22, 22, 22)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 281, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -150,7 +150,7 @@ public class GerirDocentesGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        JFrame novoUserFrame = new NovoDocenteGUI();
+        JFrame novoUserFrame = new AdicionarDocentesGUI();
         novoUserFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         novoUserFrame.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
