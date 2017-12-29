@@ -21,7 +21,7 @@ public class UCTurnoDAO {
 	}
 
 	public static void put(UC uc) throws UCJaRegistadaException{
-		if(ucs.containsKey(uc))
+		if(ucs.containsKey(uc.getNome()))
                     throw new UCJaRegistadaException();
                 else
                     ucs.put(uc.getNome(),uc);
