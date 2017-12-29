@@ -307,7 +307,11 @@ public class AreaAlunoGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        System.exit(0);
+        JFrame novoUserFrame = new GUILogin();
+        novoUserFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        novoUserFrame.setVisible(true);
+        dispose();
+        //System.exit(0);
     }//GEN-LAST:event_jButton6ActionPerformed
 
 
