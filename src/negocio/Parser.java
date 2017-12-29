@@ -16,10 +16,12 @@ public class Parser{
     public static List<Aluno> parseFicheiroAlunos(String path) throws IOException,FicheiroCorrompidoException{
         List<Aluno> alunos = new ArrayList();
         List<String> linhas =Files.readAllLines(Paths.get(path));
-        Boolean estatuto = false;
+        Boolean estatuto;
         
         for(String s:linhas){
+            estatuto = false;
             String[] aux = s.split(":");
+            System.out.println(aux.length);
             if(aux.length < 3 || aux.length > 4)
                 throw new FicheiroCorrompidoException();
             if(aux.length == 4){
@@ -59,8 +61,7 @@ public class Parser{
          
             }
             int semestre=Integer.parseInt(aux[0].substring(0,aux[0].indexOf('N')).replaceAll("[^0-9]",""))%100;
-            ucs.add(new UC( aux[1],semestre));
-            System.out.println(aux[1]+semestre);
+            ucs.add(new UC( aux[2],aux[1],semestre));
         }
         return ucs;
     }

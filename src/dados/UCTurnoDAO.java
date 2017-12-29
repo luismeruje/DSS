@@ -16,15 +16,15 @@ import negocio.UCJaRegistadaException;
 
 public class UCTurnoDAO {
     static Map<String,UC>ucs=new HashMap();
-    public UC get(String nomeUC) {
+    public UC get(String abreviaturaUC) {
 		throw new UnsupportedOperationException();
 	}
 
 	public static void put(UC uc) throws UCJaRegistadaException{
-		if(ucs.containsKey(uc.getNome()))
+		if(ucs.containsKey(uc.getAbreviatura()))
                     throw new UCJaRegistadaException();
                 else
-                    ucs.put(uc.getNome(),uc);
+                    ucs.put(uc.getAbreviatura(),uc);
 	}
 
 	public static boolean existeUC(String aNome) {

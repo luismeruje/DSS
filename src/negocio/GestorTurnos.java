@@ -9,10 +9,13 @@ import dados.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class GestorTurnos {
-
-    
+    //@return devolve um Map que tem como chave os nomes de utilizador dos alunos e como valores, um par com o nome e estatuto do aluno.
+    public static Map<String,Par<String,Boolean>> getInfoAlunos(){
+        return AlunoDAO.getInfoAlunos();
+    }
     
     //TODO: inserir método no vpp
     
@@ -61,8 +64,8 @@ public class GestorTurnos {
         return jaRegistados;
     }
     
-    public static void inserirUC(String nome, int semestre) throws UCJaRegistadaException{
-        UCTurnoDAO.put(new UC(nome,semestre));
+    public static void inserirUC(String abreviatura, String nome, int semestre) throws UCJaRegistadaException{
+        UCTurnoDAO.put(new UC(abreviatura, nome,semestre));
     }
     
     
@@ -71,7 +74,7 @@ public class GestorTurnos {
         List<String> jaRegistadas = null;
         for(UC u: ucs){
             try{
-                GestorTurnos.inserirUC(u.getNome(),u.getSemestre());
+                GestorTurnos.inserirUC(u.getAbreviatura(),u.getNome(),u.getSemestre());
             }
             catch(UCJaRegistadaException e){
                 if(jaRegistadas == null){

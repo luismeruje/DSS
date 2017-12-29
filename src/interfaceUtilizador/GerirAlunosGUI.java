@@ -5,8 +5,14 @@
  */
 package interfaceUtilizador;
 
+import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.Iterator;
+import java.util.Map;
 import javax.swing.JFrame;
+import javax.swing.table.DefaultTableModel;
+import negocio.GestorTurnos;
+import negocio.Par;
 
 /**
  *
@@ -19,6 +25,22 @@ public class GerirAlunosGUI extends javax.swing.JFrame {
      */
     public GerirAlunosGUI() {
         initComponents();
+        Map<String,Par<String,Boolean>> infoAlunos = GestorTurnos.getInfoAlunos();
+        Iterator nomesUtilizador =infoAlunos.keySet().iterator();
+        Iterator info = infoAlunos.values().iterator();
+        int i = 0;
+        
+        DefaultTableModel model = new DefaultTableModel(new Object[]{"Utilizador","Nome","Estatuto"} ,infoAlunos.size());
+        jTable1.setModel(model);
+        while(nomesUtilizador.hasNext()){
+            String auxNomeUtilizador = (String)nomesUtilizador.next();
+            Par<String,Boolean> auxInfo = (Par<String,Boolean>) info.next();
+            jTable1.setValueAt(auxNomeUtilizador,i,0);
+            jTable1.setValueAt(auxInfo.getEsquerda(),i,1);
+            jTable1.setValueAt(auxInfo.getDireita()?"Especial":"Normal",i,2);
+            i++;
+        }
+        
     }
 
     /**
@@ -53,27 +75,35 @@ public class GerirAlunosGUI extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null,  new Boolean(false)},
+                {null, null,  new Boolean(false)},
+                {null, null,  new Boolean(false)},
+                {null, null,  new Boolean(false)},
+                {null, null,  new Boolean(false)},
+                {null, null,  new Boolean(false)},
+                {null, null,  new Boolean(false)},
+                {null, null,  new Boolean(false)},
+                {null, null,  new Boolean(false)},
+                {null, null,  new Boolean(false)},
+                {null, null,  new Boolean(false)},
+                {null, null,  new Boolean(false)},
+                {null, null,  new Boolean(false)},
+                {null, null,  new Boolean(false)},
+                {null, null,  new Boolean(false)},
+                {null, null,  new Boolean(false)}
             },
             new String [] {
-                "", "", "", ""
+                "Utilizador", "Nome", "Estatuto"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.Boolean.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         AdicionarButton.setText("Adicionar alunos");
@@ -165,6 +195,15 @@ public class GerirAlunosGUI extends javax.swing.JFrame {
     private void AdicionarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AdicionarButtonActionPerformed
         JFrame novoUserFrame = new AdicionarAlunosGUI();
         novoUserFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        novoUserFrame.addWindowListener(new WindowAdapter(){
+            @Override
+            public void windowClosed(WindowEvent e){
+                JFrame novoUserFrame2 = new GerirAlunosGUI();
+                novoUserFrame2.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                dispose();
+                novoUserFrame2.setVisible(true);
+            }
+        });
         novoUserFrame.setVisible(true);
     }//GEN-LAST:event_AdicionarButtonActionPerformed
 
