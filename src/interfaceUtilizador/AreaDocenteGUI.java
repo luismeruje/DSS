@@ -168,7 +168,11 @@ public class AreaDocenteGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        System.exit(0);
+        JFrame novoUserFrame = new GUILogin();
+        novoUserFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        novoUserFrame.setVisible(true);
+        dispose();        
+//System.exit(0);
     }//GEN-LAST:event_jButton2ActionPerformed
 
    
