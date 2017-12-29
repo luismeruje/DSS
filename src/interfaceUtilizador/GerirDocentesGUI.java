@@ -5,8 +5,14 @@
  */
 package interfaceUtilizador;
 
+import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.Iterator;
+import java.util.List;
 import javax.swing.JFrame;
+import javax.swing.table.DefaultTableModel;
+import negocio.GestorTurnos;
+import negocio.Par;
 
 /**
  *
@@ -19,6 +25,18 @@ public class GerirDocentesGUI extends javax.swing.JFrame {
      */
     public GerirDocentesGUI() {
         initComponents();
+        List<Par<String,String>> infoDocentes = GestorTurnos.getInfoDocentes();
+        Iterator it =infoDocentes.iterator();
+        int i = 0;
+        
+        DefaultTableModel model = new DefaultTableModel(new Object[]{"Utilizador","Nome"} ,infoDocentes.size());
+        jTable1.setModel(model);
+        while(it.hasNext()){
+            Par<String,String> aux = (Par<String,String>) it.next();
+            jTable1.setValueAt(aux.getEsquerda(),i,0);
+            jTable1.setValueAt(aux.getDireita(),i,1);
+            i++;
+        }
     }
 
     /**
@@ -152,6 +170,15 @@ public class GerirDocentesGUI extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         JFrame novoUserFrame = new AdicionarDocentesGUI();
         novoUserFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        novoUserFrame.addWindowListener(new WindowAdapter(){
+            @Override
+            public void windowClosed(WindowEvent e){
+                JFrame novoUserFrame2 = new GerirDocentesGUI();
+                novoUserFrame2.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                dispose();
+                novoUserFrame2.setVisible(true);
+            }
+        });
         novoUserFrame.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 

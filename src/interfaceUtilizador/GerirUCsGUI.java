@@ -5,7 +5,14 @@
  */
 package interfaceUtilizador;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.util.Iterator;
+import java.util.Map;
 import javax.swing.JFrame;
+import javax.swing.table.DefaultTableModel;
+import negocio.GestorTurnos;
+import negocio.Par;
 
 /**
  *
@@ -18,6 +25,21 @@ public class GerirUCsGUI extends javax.swing.JFrame {
      */
     public GerirUCsGUI() {
         initComponents();
+        Map<String,Par<String,Integer>> infoUCs = GestorTurnos.getInfoUCs();
+        Iterator abreviaturas =infoUCs.keySet().iterator();
+        Iterator info = infoUCs.values().iterator();
+        int i = 0;
+        
+        DefaultTableModel model = new DefaultTableModel(new Object[]{"Abreviatura","Nome","Semestre"} ,infoUCs.size());
+        jTable2.setModel(model);
+        while(abreviaturas.hasNext()){
+            String auxNomeUtilizador = (String)abreviaturas.next();
+            Par<String,Integer> auxInfo = (Par<String,Integer>) info.next();
+            jTable2.setValueAt(auxNomeUtilizador,i,0);
+            jTable2.setValueAt(auxInfo.getEsquerda(),i,1);
+            jTable2.setValueAt(auxInfo.getDireita(),i,2);
+            i++;
+        }
     }
 
     /**
@@ -126,6 +148,15 @@ public class GerirUCsGUI extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         JFrame novoUserFrame = new AdicionarUCsGUI();
         novoUserFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        novoUserFrame.addWindowListener(new WindowAdapter(){
+            @Override
+            public void windowClosed(WindowEvent e){
+                JFrame novoUserFrame2 = new GerirUCsGUI();
+                novoUserFrame2.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                dispose();
+                novoUserFrame2.setVisible(true);
+            }
+        });
         novoUserFrame.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 

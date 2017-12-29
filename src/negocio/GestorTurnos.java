@@ -17,6 +17,15 @@ public class GestorTurnos {
         return AlunoDAO.getInfoAlunos();
     }
     
+    //@return Lista com pares que contêm o nome de utilizador e nome, de cada docente registado no sistema. 
+    public static List<Par<String,String>> getInfoDocentes(){
+        return DocenteDAO.getInfoDocentes();
+    }
+    
+    //@return Mapa que mapeia as abreviaturas de cada UC para um Par com o seu nome e nr. semestre
+    public static Map<String,Par<String,Integer>> getInfoUCs(){
+        return UCTurnoDAO.getInfoUCs();
+    }
     //TODO: inserir método no vpp
     
     public static void inserirAdministrador(String nomeUtilizador, String password)throws UtilizadorJaRegistadoException{

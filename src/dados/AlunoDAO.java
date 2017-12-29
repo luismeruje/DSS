@@ -14,7 +14,6 @@ import negocio.UtilizadorJaRegistadoException;
 public class AlunoDAO {
     
     static Map<String,Aluno>alunos = new HashMap();
-    //TODO:Alterar argumento no vpp
     
     
     public static void atualizar(Aluno aluno) {
@@ -32,19 +31,12 @@ public class AlunoDAO {
     public static boolean existeAluno(String nomeUtilizador) {
         return alunos.containsKey(nomeUtilizador);
     }
-    
-    //WARNING:Não faz clone
-    public static void put(Aluno aluno) throws UtilizadorJaRegistadoException{
-       
-        if(alunos.containsKey(aluno.getNomeUtilizador()))
-            throw new UtilizadorJaRegistadoException(aluno.getNomeUtilizador());
-	alunos.put(aluno.getNomeUtilizador(),aluno);
-    }
-    
+ 
     public static Aluno get(String nomeUtilizador) {
         return alunos.get(nomeUtilizador);
     }
     
+    //@return devolve um Map que tem como chave os nomes de utilizador dos alunos e como valores, um par com o nome e estatuto do aluno.
     public static Map<String,Par<String,Boolean>> getInfoAlunos(){
         Map<String,Par<String,Boolean>> info = new HashMap(); 
         Iterator it = alunos.values().iterator();
@@ -53,5 +45,13 @@ public class AlunoDAO {
             info.put(aux.getNomeUtilizador(),new Par(aux.getNome(),aux.getEstatuto()));
         }
         return info;
+    }
+    
+     //WARNING:Não faz clone
+    public static void put(Aluno aluno) throws UtilizadorJaRegistadoException{
+       
+        if(alunos.containsKey(aluno.getNomeUtilizador()))
+            throw new UtilizadorJaRegistadoException(aluno.getNomeUtilizador());
+	alunos.put(aluno.getNomeUtilizador(),aluno);
     }
 }
