@@ -16,6 +16,12 @@ import java.util.Map;
 
 
 public class Parser{
+        
+    private static String parseAbreviaturaUC(List<String> linhasUC){
+        return linhasUC.get(0).replaceAll("[{=]", "");
+    } 
+    
+    
     public static List<Aluno> parseFicheiroAlunos(String path) throws IOException,FicheiroCorrompidoException{
         List<Aluno> alunos = new ArrayList();
         List<String> linhas =Files.readAllLines(Paths.get(path));
@@ -24,7 +30,6 @@ public class Parser{
         for(String s:linhas){
             estatuto = false;
             String[] aux = s.split(":");
-            System.out.println(aux.length);
             if(aux.length < 3 || aux.length > 4)
                 throw new FicheiroCorrompidoException();
             if(aux.length == 4){
@@ -112,9 +117,27 @@ public class Parser{
         return new Horario(inicio,fim,diaSemana);
     }
     
-    private static String parseAbreviaturaUC(List<String> linhasUC){
-        return linhasUC.get(0).replaceAll("[{=]", "");
-    } 
+    public static Map<String,List<Par<String,Integer>>> parseFicheiroAlocacoesTurnos(String path)throws IOException,FicheiroCorrompidoException{
+        Map<String,List<Par<String,Integer>>> alocacoes = new HashMap();
+        List<String>linhas=Files.readAllLines(Paths.get(path));
+        linhas.remove(0);
+        linhas.remove(linhas.size()-1);
+        for(String s: linhas){
+            s.trim();
+            String[]linhasAluno =s.split(",");
+            if(linhasAluno.length<2)
+                throw new FicheiroCorrompidoException();
+            List<Par<String,Integer>>turnos = new ArrayList();
+            for(int i = 0; i < linhasAluno.length;i++){
+                linhasAluno[i]=linhasAluno[i].replaceAll("[\'\\(\\)]","");
+                if(i!=0){
+                    turnos.add(new Par(linhasAluno[i].split("-")[0],parseNrTurno(linhasAluno[i])));
+                }
+            }
+            alocacoes.put(linhasAluno[0],turnos);
+        }
+        return alocacoes;
+    }
     
     private static int parseNrTurno(String s){
         return Integer.parseInt(s.replaceAll("[^0-9]", ""));

@@ -14,6 +14,39 @@ import java.util.List;
 import java.util.Map;
 
 public class GestorTurnos {
+    
+    public static void alocarTurnos(String path)throws IOException, FicheiroCorrompidoException,ConnectionErrorException,SQLException,ContaInexistenteException{
+        Map<String,List<Par<String,Integer>>> todasAlocacoes = Parser.parseFicheiroAlocacoesTurnos(path);
+        Iterator it = todasAlocacoes.keySet().iterator();
+        while(it.hasNext()){
+            String nomeUtilizadorAluno = (String)it.next();
+                List<Par<String,Integer>> alocacoesAluno = todasAlocacoes.get(nomeUtilizadorAluno);
+                for(Par p: alocacoesAluno){
+                    System.out.println(nomeUtilizadorAluno+p.getEsquerda()+p.getDireita());
+                    GestorTurnos.alocarTurnoAAluno(p,nomeUtilizadorAluno);
+                }
+        }
+    }
+    
+    public static void alocarTurnoAAluno(Par<String,Integer> idTurno,String nomeUtilizadorAluno)throws ContaInexistenteException,ConnectionErrorException,SQLException{
+        Turno turno = UCTurnoDAO.getTurno(idTurno);
+        if(turno != null){
+            List<String>alunosDoTurno = turno.getAlunos();
+            Aluno aluno = AlunoDAO.get(nomeUtilizadorAluno);
+            List<Par<String,Integer>>turnosDoAluno = aluno.getIdTurnos();
+            if(!alunosDoTurno.contains(nomeUtilizadorAluno)||!turnosDoAluno.contains(idTurno)){
+                UCTurnoDAO.inserirAlunoTurno(idTurno,nomeUtilizadorAluno);
+                //AlunoDAO.inserirTurno(idTurno);
+            }
+            
+        }
+    }
+    
+    public static List<String >getIdsDosAlunosDoTurno(Par<String,Integer> idTurno){
+        Turno turno = UCTurnoDAO.getTurno(idTurno);
+        return turno.getAlunos();
+    }
+    
     //@return devolve um Map que tem como chave os nomes de utilizador dos alunos e como valores, um par com o nome e estatuto do aluno.
     public static Map<String,Par<String,Boolean>> getInfoAlunos() throws SQLException, ConnectionErrorException{
         return AlunoDAO.getInfoAlunos();
@@ -144,7 +177,6 @@ public class GestorTurnos {
             }
         
         Admin admin = AdminDAO.get(nomeUtilizador);
-        System.out.println(admin);
         if(admin!=null){
             if(!verificaPassword(admin,password))
                 throw new PasswordIncorretaException();

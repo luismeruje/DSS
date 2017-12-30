@@ -14,6 +14,20 @@ public class Par <E,D>{
         this.esquerda = esquerda;
         this.direita = direita;
     }
+    @Override
+    public boolean equals(Object o){
+        if (this == o)
+        return true;
+       
+        if (o == null)
+            return false;
+        
+        if (getClass() != o.getClass())
+            return false;
+        Par par = (Par) o;
+        return esquerda.equals(par.getEsquerda()) && direita.equals(par.getDireita());
+    }
+    
     public E getEsquerda() {
         return esquerda;
     }
@@ -21,5 +35,7 @@ public class Par <E,D>{
     public D getDireita() {
         return direita;
     }
+    
+    
    
 }

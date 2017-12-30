@@ -162,9 +162,9 @@ public class AreaDocenteGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        JFrame novoUserFrame = new GerirTurnoGUI();
-        novoUserFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        novoUserFrame.setVisible(true);
+//        JFrame novoUserFrame = new GerirTurnoGUI();
+//        novoUserFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+//        novoUserFrame.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -172,7 +172,7 @@ public class AreaDocenteGUI extends javax.swing.JFrame {
         novoUserFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         novoUserFrame.setVisible(true);
         dispose();        
-//System.exit(0);
+        //System.exit(0);
     }//GEN-LAST:event_jButton2ActionPerformed
 
    

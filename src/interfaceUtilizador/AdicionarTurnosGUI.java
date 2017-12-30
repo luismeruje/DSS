@@ -120,7 +120,6 @@ public class AdicionarTurnosGUI extends javax.swing.JFrame {
             }
         }
         catch(IOException e){
-        //System.out.println("a");
         }
         catch(FicheiroCorrompidoException e){
             JOptionPane.showMessageDialog(this,"Ficheiro corrompido.","Erro",JOptionPane.ERROR_MESSAGE);
@@ -135,7 +134,7 @@ public class AdicionarTurnosGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        final JFileChooser fc = new JFileChooser();
+        JFileChooser fc = new JFileChooser();
         fc.showOpenDialog(this);
         ficheiroTextField.setText(fc.getSelectedFile().getAbsolutePath());
     }//GEN-LAST:event_jButton2ActionPerformed

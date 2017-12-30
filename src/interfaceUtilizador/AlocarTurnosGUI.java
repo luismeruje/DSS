@@ -6,10 +6,11 @@
 package interfaceUtilizador;
 
 import java.io.IOException;
-import java.util.List;
-import javax.swing.JDialog;
+import java.sql.SQLException;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import negocio.ConnectionErrorException;
+import negocio.ContaInexistenteException;
 import negocio.FicheiroCorrompidoException;
 import negocio.GestorTurnos;
 
@@ -17,12 +18,12 @@ import negocio.GestorTurnos;
  *
  * @author LuisFerreira
  */
-public class AdicionarUCsGUI extends javax.swing.JFrame {
+public class AlocarTurnosGUI extends javax.swing.JFrame {
 
     /**
-     * Creates new form AdicionarUCsGUI
+     * Creates new form AlocarTurnosGUI
      */
-    public AdicionarUCsGUI() {
+    public AlocarTurnosGUI() {
         initComponents();
     }
 
@@ -52,14 +53,14 @@ public class AdicionarUCsGUI extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("Adicionar");
+        jButton2.setText("Cancelar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
         });
 
-        jButton3.setText("Cancelar");
+        jButton3.setText("Alocar");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
@@ -71,17 +72,18 @@ public class AdicionarUCsGUI extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton2)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(ficheiroTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(31, 31, 31)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(ficheiroTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(70, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton2)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -91,8 +93,8 @@ public class AdicionarUCsGUI extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(ficheiroTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
                     .addComponent(jButton3)))
@@ -101,35 +103,32 @@ public class AdicionarUCsGUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        dispose();
-    }//GEN-LAST:event_jButton3ActionPerformed
-
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        JFileChooser fc = new JFileChooser();
+        fc.showOpenDialog(this);
+        ficheiroTextField.setText(fc.getSelectedFile().getAbsolutePath());
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         try{
-            if(ficheiroTextField.getText()!=null){
-                List<String> jaRegistadas = GestorTurnos.inserirUCs(ficheiroTextField.getText());
-                if(jaRegistadas != null){
-                    JDialog novoDialog = new UCsJaRegistadasJDialog(this,true,jaRegistadas);
-                    novoDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-                    novoDialog.setVisible(true);
-                }
-                dispose();
-            }
+            GestorTurnos.alocarTurnos(ficheiroTextField.getText());
+            dispose();
         }
         catch(IOException e){}
         catch(FicheiroCorrompidoException e){
             JOptionPane.showMessageDialog(this,"Ficheiro corrompido.","Erro",JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_jButton2ActionPerformed
+        catch(ConnectionErrorException e) {}
+        catch(SQLException e) {}
+        catch(ContaInexistenteException e){
+            JOptionPane.showMessageDialog(this,"O ficheiro contém informação para alunos que não estão registados no sistema.\n Informação a partir deste utilizador ignorada.","Aviso",JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        final JFileChooser fc = new JFileChooser();
-        fc.showOpenDialog(this);
-        ficheiroTextField.setText(fc.getSelectedFile().getAbsolutePath());
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField ficheiroTextField;

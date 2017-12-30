@@ -19,11 +19,7 @@ public class Aluno extends Utilizador{
         this.estatuto = estatuto;
     }
     
-    //TODO:Alterar nome do método no vpp
-    public boolean getEstatuto() {
-	return estatuto;
-    }
-
+    
     public void adicionarTurno(Par<String, Integer> turno) {
         this.idTurnos.add(turno);
     }
@@ -31,7 +27,17 @@ public class Aluno extends Utilizador{
     public void adicionarProposta(int idProposta) {
         this.propostas.add(idProposta);
     }
-
+    
+    //TODO:Alterar nome do método no vpp
+    public boolean getEstatuto() {
+	return estatuto;
+    }
+    
+    //Warning:não faz clone
+    public List<Par<String,Integer>> getIdTurnos(){
+        return idTurnos;
+    }
+    
     public int getNrAluno() {
         return this.nrAluno;
     }

@@ -20,7 +20,6 @@ public class UtilizadoresJaRegistadosJDialog extends javax.swing.JDialog {
         jList1.setModel(model);
         for(String s: jaRegistados)
             model.addElement(s);
-        System.out.println(jaRegistados.toArray(new String[jaRegistados.size()])[0]);
     }
 
     /**

@@ -9,7 +9,7 @@ public class Turno {
 	private String sala;
 	private int capacidadeSala;
 	private final String tipo;
-	private List<Integer> alunos;
+	private List<String> alunos;
 	private List<RegistoPresencas> registos = new ArrayList<RegistoPresencas>();
 	private Horario horario;
         private String idDocente;
@@ -25,8 +25,10 @@ public class Turno {
 
         
         
-    public void adicionarAluno(int codA) {
-        throw new UnsupportedOperationException();
+    public void adicionarAluno(String nomeUtilizador) {
+        if(alunos == null)
+            alunos = new ArrayList();
+        alunos.add(nomeUtilizador);
     }
 
     
@@ -40,6 +42,10 @@ public class Turno {
             return false;
         Turno turno = (Turno) o;
         return this.numero.equals(turno.getNumero());
+    }
+    //WARNING:não faz clone
+    public List<String> getAlunos(){
+        return alunos;
     }
     
     public int getNumero() {

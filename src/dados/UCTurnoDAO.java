@@ -63,17 +63,23 @@ public class UCTurnoDAO {
 	throw new UnsupportedOperationException();
     }
 
-    public Turno getTurno(Par<String, Integer> aTurno) {
-	throw new UnsupportedOperationException();
+    public static Turno getTurno(Par<String, Integer> idTurno) {
+	Turno turno = ucs.get(idTurno.getEsquerda()).getTurno(idTurno.getDireita());
+        return turno;
     }
     
     public List<Turno> getTurnos(String aNomeUC) {
 	throw new UnsupportedOperationException();
     }
     
+    public static void inserirAlunoTurno(Par<String,Integer> idTurno,String nomeUtilizadorAluno){
+        UC uc = ucs.get(idTurno.getEsquerda());
+        uc.adicionarAlunoATurno(idTurno.getDireita(),nomeUtilizadorAluno);
+    }
+    
+    
     public static void inserirTurno(Par<String,Turno> ucTurno)throws UCInexistenteException,TurnoJaRegistadoException{
         UC uc = ucs.get(ucTurno.getEsquerda());
-        System.out.println(ucTurno.getEsquerda());
         if(uc == null)
             throw new UCInexistenteException();
         uc.inserirTurno(ucTurno.getDireita());
