@@ -53,15 +53,14 @@ public class AlunoDAO {
                 throw new ContaInexistenteException();
 
             // Obter turnos e respetivas UC's a que o aluno está inscrito
-            ps = c.prepareStatement("SELECT Turno.idTurno, Turno.UC_idUC FROM Turno"
+            ps = c.prepareStatement("SELECT Turno.Numero.UCAbreviatura FROM Turno"
                                         +"INNER JOIN Aluno_Turno on Turno.idTurno = Aluno_Turno.Turno_idTurno"
-                                        +"INNER JOIN Aluno on Aluno_Turno.Aluno.NrAluno = Aluno.NrAluno"
-                                        +"WHERE Aluno.NomeUtilizador = ?");
+                                        +"WHERE Aluno_Turno.Aluno_NomeUtilizador = ?");
             ps.setString(1, nomeUtilizador);
             rs = ps.executeQuery();
             while (rs.next()) {
-                String esquerda = rs.getString("UC_idUC");
-                int direita = rs.getInt("idTurno");
+                String esquerda = rs.getString("UCAbreviatura");
+                int direita = rs.getInt("Numero");
                 Par<String, Integer> turno;
                 turno = new Par<String, Integer>(esquerda, direita);
                 aluno.adicionarTurno(turno);
@@ -126,4 +125,19 @@ public class AlunoDAO {
           else
             throw new ConnectionErrorException();
         }
+    
+    public static void inserirTurno(String nomeUtilizador, Par<String,Integer> idTurno) throws ConnectionErrorException, SQLException {
+          Connection c = Connect.connect();
+          if (c != null) {              
+            PreparedStatement ps = c.prepareStatement("INSERT INTO Aluno_Turno (Turno_idTurno, Aluno_NomeUtilizador)"
+                                                        + "SELECT idTurno, ? FROM Turno"
+                                                        + "WHERE Turno.UCAbreviatura = ? and Turno.Numero = ?");
+            ps.setString(1, nomeUtilizador);
+            ps.setString(2, idTurno.getEsquerda());
+            ps.setInt(3, idTurno.getDireita());
+            ps.executeUpdate();
+          }
+          else 
+            throw new ConnectionErrorException();
+    }
 }
