@@ -126,8 +126,9 @@ public class GUILogin extends javax.swing.JFrame {
         try{
             Utilizador utilizador = GestorTurnos.login(NomeUtilizadorTextField.getText(),PasswordTextField.getText());
             JFrame novoUserFrame = null;
-            if(utilizador instanceof Aluno)
+            if(utilizador instanceof Aluno){
                 novoUserFrame = new AreaAlunoGUI((Aluno) utilizador);
+            }
             else if(utilizador instanceof Docente)
                 novoUserFrame = new AreaDocenteGUI((Docente) utilizador);
             else if (utilizador instanceof Admin)
@@ -137,8 +138,8 @@ public class GUILogin extends javax.swing.JFrame {
             novoUserFrame.setVisible(true);
   
         }
-        catch(PasswordIncorretaException e){}
-        catch(ContaInexistenteException e){} catch (ConnectionErrorException ex) {
+        catch(PasswordIncorretaException e){System.out.println("a");}
+        catch(ContaInexistenteException e){System.out.println("b");} catch (ConnectionErrorException ex) {
             Logger.getLogger(GUILogin.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
             Logger.getLogger(GUILogin.class.getName()).log(Level.SEVERE, null, ex);

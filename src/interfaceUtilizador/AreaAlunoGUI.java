@@ -1,6 +1,8 @@
 package interfaceUtilizador;
 
+import java.util.List;
 import javax.swing.JFrame;
+import javax.swing.table.DefaultTableModel;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -13,6 +15,8 @@ import javax.swing.JFrame;
  * @author LuisFerreira
  */
 import negocio.Aluno;
+import negocio.GestorTurnos;
+import negocio.Par;
 public class AreaAlunoGUI extends javax.swing.JFrame {
 
     /**
@@ -23,8 +27,20 @@ public class AreaAlunoGUI extends javax.swing.JFrame {
     public AreaAlunoGUI(Aluno aluno) {
         this.aluno = aluno;
         initComponents();
+        List<Par<String,Integer>> infoTurnos = aluno.getIdTurnos();
+        int i = 0;
+        
+        DefaultTableModel model = new DefaultTableModel(new Object[]{"UC","Nr. Turno"} ,infoTurnos.size());
+        jTable1.setModel(model);
+        if(infoTurnos!=null){
+            for(Par p: infoTurnos){
+                jTable1.setValueAt(p.getEsquerda(),i,0);
+                jTable1.setValueAt(p.getDireita(),i,1);
+                i++;
+            }
+        }
     }
-
+//Nota:trocas->AnonymousInnerClass que abre outra vez a janela e dá para o construtor get(Aluno)
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

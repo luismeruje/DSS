@@ -5,12 +5,13 @@
  */
 package negocio;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
 public class Aluno extends Utilizador{
-    private List<Par<String,Integer>> idTurnos=null;
-    private List<Integer> propostas=null;
+    private List<Par<String,Integer>> idTurnos=new ArrayList();
+    private List<Integer> propostas=new ArrayList();
     private boolean estatuto;
     private int nrAluno;
     
