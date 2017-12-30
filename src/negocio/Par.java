@@ -21,7 +21,5 @@ public class Par <E,D>{
     public D getDireita() {
         return direita;
     }
-    
-    
    
 }

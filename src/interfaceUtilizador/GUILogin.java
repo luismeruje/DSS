@@ -6,6 +6,9 @@
 package interfaceUtilizador;
 
 import java.awt.event.WindowEvent;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import negocio.*;
 
@@ -150,7 +153,11 @@ public class GUILogin extends javax.swing.JFrame {
   
         }
         catch(PasswordIncorretaException e){}
-        catch(ContaInexistenteException e){}
+        catch(ContaInexistenteException e){} catch (ConnectionErrorException ex) {
+            Logger.getLogger(GUILogin.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(GUILogin.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_IniciarSessao1ActionPerformed
    
     
@@ -160,7 +167,11 @@ public class GUILogin extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try{GestorTurnos.inserirAdministrador(NomeUtilizadorTextField.getText(),PasswordTextField.getText());}
-        catch(UtilizadorJaRegistadoException e){}
+        catch(UtilizadorJaRegistadoException e){} catch (SQLException ex) {
+            Logger.getLogger(GUILogin.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ConnectionErrorException ex) {
+            Logger.getLogger(GUILogin.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
     
     

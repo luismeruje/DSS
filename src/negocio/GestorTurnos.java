@@ -7,13 +7,14 @@ package negocio;
 import dados.AdminDAO;
 import dados.*;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class GestorTurnos {
     //@return devolve um Map que tem como chave os nomes de utilizador dos alunos e como valores, um par com o nome e estatuto do aluno.
-    public static Map<String,Par<String,Boolean>> getInfoAlunos(){
+    public static Map<String,Par<String,Boolean>> getInfoAlunos() throws SQLException, ConnectionErrorException{
         return AlunoDAO.getInfoAlunos();
     }
     
@@ -28,16 +29,16 @@ public class GestorTurnos {
     }
     //TODO: inserir método no vpp
     
-    public static void inserirAdministrador(String nomeUtilizador, String password)throws UtilizadorJaRegistadoException{
+    public static void inserirAdministrador(String nomeUtilizador, String password)throws UtilizadorJaRegistadoException, SQLException, ConnectionErrorException{
         Admin administrador = new Admin(nomeUtilizador,password);
         AdminDAO.put(administrador);
     }
     
-    public static void inserirAluno(String nome, String nomeUtilizador, String password, Boolean estatuto) throws UtilizadorJaRegistadoException{
+    public static void inserirAluno(String nome, String nomeUtilizador, String password, Boolean estatuto) throws UtilizadorJaRegistadoException, ConnectionErrorException, SQLException{
         AlunoDAO.put(new Aluno(nome,nomeUtilizador,password,estatuto));
     }
     
-    public static List<String> inserirAlunos(String path) throws IOException,FicheiroCorrompidoException{
+    public static List<String> inserirAlunos(String path) throws IOException,FicheiroCorrompidoException, ConnectionErrorException, SQLException{
         List<Aluno> alunos = Parser.parseFicheiroAlunos(path);
         List<String> jaRegistados = null;
         for(Aluno a: alunos){
@@ -96,22 +97,25 @@ public class GestorTurnos {
     }
     
     //TODO: meter exceptions no vpp
-    public static Utilizador login(String nomeUtilizador, String password) throws PasswordIncorretaException,ContaInexistenteException{
-        Aluno aluno = AlunoDAO.get(nomeUtilizador);
-        if(aluno!=null){
-            if(!verificaPassword(aluno,password))
-                throw new PasswordIncorretaException();
-            else
-                return aluno;
+    public static Utilizador login(String nomeUtilizador, String password) throws PasswordIncorretaException,ContaInexistenteException, ConnectionErrorException, SQLException{
+        try {
+            Aluno aluno = AlunoDAO.get(nomeUtilizador);
+            if(aluno!=null){
+                if(!verificaPassword(aluno,password))
+                    throw new PasswordIncorretaException();
+                else
+                    return aluno;
+            }
         }
+        catch (ContaInexistenteException e) {}
         
-        Docente docente = DocenteDAO.get(nomeUtilizador);
-        if(docente != null){
-            if(!verificaPassword(docente,password))
-                throw new PasswordIncorretaException();
-            else
-                return docente;
-        }
+            Docente docente = DocenteDAO.get(nomeUtilizador);
+            if(docente != null){
+                if(!verificaPassword(docente,password))
+                    throw new PasswordIncorretaException();
+                else
+                    return docente;
+            }
         
         Admin admin = AdminDAO.get(nomeUtilizador);
         if(admin!=null){

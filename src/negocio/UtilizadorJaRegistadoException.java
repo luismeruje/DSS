@@ -15,7 +15,8 @@ public class UtilizadorJaRegistadoException extends Exception {
      * Creates a new instance of <code>UtilizadorJaRegistadoException</code>
      * without detail message.
      */
-
+    public UtilizadorJaRegistadoException() {
+    }
 
     /**
      * Constructs an instance of <code>UtilizadorJaRegistadoException</code>

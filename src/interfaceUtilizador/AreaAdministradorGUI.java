@@ -1,5 +1,8 @@
 package interfaceUtilizador;
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 
 /*
@@ -10,6 +13,7 @@ import javax.swing.JFrame;
 
 
 import negocio.Admin;
+import negocio.ConnectionErrorException;
 public class AreaAdministradorGUI extends javax.swing.JFrame {
 
     /**
@@ -116,9 +120,15 @@ public class AreaAdministradorGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        JFrame novoUserFrame = new GerirAlunosGUI();
-        novoUserFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        novoUserFrame.setVisible(true);
+        try {
+            JFrame novoUserFrame = new GerirAlunosGUI();
+            novoUserFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            novoUserFrame.setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(AreaAdministradorGUI.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ConnectionErrorException ex) {
+            Logger.getLogger(AreaAdministradorGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
