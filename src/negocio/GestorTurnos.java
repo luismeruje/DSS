@@ -15,6 +15,22 @@ import java.util.Map;
 
 public class GestorTurnos {
     
+    
+    
+    public static void alocarTurnoAAluno(Par<String,Integer> idTurno,String nomeUtilizadorAluno)throws ConnectionErrorException,SQLException{
+        Turno turno = UCTurnoDAO.getTurno(idTurno);
+        if(turno != null){
+            List<String>alunosDoTurno = turno.getAlunos();
+            //Aluno aluno = AlunoDAO.get(nomeUtilizadorAluno);
+            //List<Par<String,Integer>>turnosDoAluno = aluno.getIdTurnos();
+            if(alunosDoTurno==null || !alunosDoTurno.contains(nomeUtilizadorAluno)){//||!turnosDoAluno.contains(idTurno)){
+                UCTurnoDAO.inserirAlunoTurno(idTurno,nomeUtilizadorAluno);
+                //AlunoDAO.inserirTurno(idTurno);
+            }
+            
+        }
+    }
+    
     public static void alocarTurnos(String path)throws IOException, FicheiroCorrompidoException,ConnectionErrorException,SQLException,ContaInexistenteException{
         Map<String,List<Par<String,Integer>>> todasAlocacoes = Parser.parseFicheiroAlocacoesTurnos(path);
         Iterator it = todasAlocacoes.keySet().iterator();
@@ -22,23 +38,10 @@ public class GestorTurnos {
             String nomeUtilizadorAluno = (String)it.next();
                 List<Par<String,Integer>> alocacoesAluno = todasAlocacoes.get(nomeUtilizadorAluno);
                 for(Par p: alocacoesAluno){
-                    System.out.println(nomeUtilizadorAluno+p.getEsquerda()+p.getDireita());
                     GestorTurnos.alocarTurnoAAluno(p,nomeUtilizadorAluno);
+                    Turno testeTurno=UCTurnoDAO.getTurno(p);
+                    System.out.println(testeTurno.getAlunos().get(0));
                 }
-        }
-    }
-    
-    public static void alocarTurnoAAluno(Par<String,Integer> idTurno,String nomeUtilizadorAluno)throws ContaInexistenteException,ConnectionErrorException,SQLException{
-        Turno turno = UCTurnoDAO.getTurno(idTurno);
-        if(turno != null){
-            List<String>alunosDoTurno = turno.getAlunos();
-            Aluno aluno = AlunoDAO.get(nomeUtilizadorAluno);
-            List<Par<String,Integer>>turnosDoAluno = aluno.getIdTurnos();
-            if(!alunosDoTurno.contains(nomeUtilizadorAluno)||!turnosDoAluno.contains(idTurno)){
-                UCTurnoDAO.inserirAlunoTurno(idTurno,nomeUtilizadorAluno);
-                //AlunoDAO.inserirTurno(idTurno);
-            }
-            
         }
     }
     

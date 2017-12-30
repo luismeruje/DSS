@@ -24,17 +24,19 @@ public class GerirTurnoGUI extends javax.swing.JFrame {
     public GerirTurnoGUI(String nomeUC,int numeroTurno) {
         initComponents();
         List<String> idsAlunos = GestorTurnos.getIdsDosAlunosDoTurno(new Par(nomeUC,numeroTurno));
-        Iterator it =idsAlunos.iterator();
-        int i = 0;
-        
-        DefaultTableModel model = new DefaultTableModel(new Object[]{"Nr. Aluno"} ,idsAlunos.size());
-        jTable1.setModel(model);
-        jTable1.setRowSelectionAllowed(true);
-        jTable1.setColumnSelectionAllowed(false);
-        while(it.hasNext()){
-            String idAluno = (String)it.next();
-            jTable1.setValueAt(idAluno,i,0);
-            i++;
+        if(idsAlunos!=null){
+            Iterator it =idsAlunos.iterator();
+            int i = 0;
+
+            DefaultTableModel model = new DefaultTableModel(new Object[]{"Nr. Aluno"} ,idsAlunos.size());
+            jTable1.setModel(model);
+            jTable1.setRowSelectionAllowed(true);
+            jTable1.setColumnSelectionAllowed(false);
+            while(it.hasNext()){
+                String idAluno = (String)it.next();
+                jTable1.setValueAt(idAluno,i,0);
+                i++;
+            }
         }
     }
 

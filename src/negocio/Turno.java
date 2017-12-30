@@ -10,7 +10,7 @@ public class Turno {
 	private int capacidadeSala;
 	private final String tipo;
 	private List<String> alunos;
-	private List<RegistoPresencas> registos = new ArrayList<RegistoPresencas>();
+	private List<RegistoPresencas> registos = new ArrayList();
 	private Horario horario;
         private String idDocente;
 
@@ -26,6 +26,7 @@ public class Turno {
         
         
     public void adicionarAluno(String nomeUtilizador) {
+        System.out.println(numero);
         if(alunos == null)
             alunos = new ArrayList();
         alunos.add(nomeUtilizador);
@@ -41,10 +42,11 @@ public class Turno {
         if (getClass() != o.getClass())
             return false;
         Turno turno = (Turno) o;
-        return this.numero.equals(turno.getNumero());
+        return this.numero.equals(turno.getNumero()) && this.tipo.equals(turno.getTipo());
     }
     //WARNING:não faz clone
     public List<String> getAlunos(){
+        System.out.println(numero);
         return alunos;
     }
     
