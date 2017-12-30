@@ -9,7 +9,10 @@ import java.io.IOException;
 import java.util.List;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class Parser{
@@ -65,4 +68,82 @@ public class Parser{
         }
         return ucs;
     }
+    //@return Map que mapeia a abreviatura de uma UC para um conjunto de turnos para lhe serem inseridos
+    public static Map<String,List<Turno>> parseFicheiroTurnos(String path) throws IOException, FicheiroCorrompidoException{
+        Map<String,List<Turno>> ucTurnos = new HashMap<String,List<Turno>>();
+        List<String>linhas = Files.readAllLines(Paths.get(path));
+        int i = 0, f=0;
+        for(String s: linhas){
+            if(s.equals("}")){
+                f++;
+                List<String>aux=linhas.subList(i,f);
+                i = f;
+                ucTurnos.put(parseAbreviaturaUC(aux),parseTurnosUC(aux));
+            }
+            else
+                f++;
+        }
+        return ucTurnos;
+    }
+    
+    private static Horario parseHorario(String linhaDiaSemana, String linhaInicio, String linhaDuracao)throws FicheiroCorrompidoException{
+        LocalTime inicio=LocalTime.of(Integer.parseInt(linhaInicio), 0);
+        LocalTime fim = inicio.plusHours((long)Float.parseFloat(linhaDuracao));
+        int diaSemana = 0;
+        switch(linhaDiaSemana.toLowerCase()){
+            case "segunda":
+                diaSemana=1;
+                break;
+            case "terça":
+                diaSemana=2;
+                break;
+            case "quarta":
+                diaSemana=3;
+                break;
+            case "quinta":
+                diaSemana=4;
+                break;
+            case "sexta":
+                diaSemana=5;
+                break;
+            default:
+                throw new FicheiroCorrompidoException();
+        }
+        return new Horario(inicio,fim,diaSemana);
+    }
+    
+    private static String parseAbreviaturaUC(List<String> linhasUC){
+        return linhasUC.get(0).replaceAll("[{=]", "");
+    } 
+    
+    private static int parseNrTurno(String s){
+        return Integer.parseInt(s.replaceAll("[^0-9]", ""));
+    }
+    
+    private static String parseTipoTurno(String s){
+        return s.replaceAll("[0-9:]","");
+    }
+    
+    private static List<Turno> parseTurnosUC(List<String> linhasUC)throws FicheiroCorrompidoException{
+        List<Turno>turnos=new ArrayList();
+        String s;
+        for(int i = 1;i < linhasUC.size()-1;i++){
+            
+            s=linhasUC.get(i);
+            s=s.trim();
+            String[] linhasTurno= s.split(",");
+            if(linhasTurno.length!=7){
+                throw new FicheiroCorrompidoException();
+                
+            }
+            for(int j = 0; j<linhasTurno.length;j++){
+                linhasTurno[j]=linhasTurno[j].replaceAll("[\\'\\(\\)]", "");
+            }
+            
+            turnos.add(new Turno(parseNrTurno(linhasTurno[0]),linhasTurno[1],Integer.parseInt(linhasTurno[2]),parseTipoTurno(linhasTurno[0]),parseHorario(linhasTurno[4],linhasTurno[5],linhasTurno[6]),linhasTurno[3]));   
+        }
+        return turnos;
+    }
+    
+    
 }

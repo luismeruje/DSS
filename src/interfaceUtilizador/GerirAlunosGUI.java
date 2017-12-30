@@ -31,14 +31,12 @@ public class GerirAlunosGUI extends javax.swing.JFrame {
         initComponents();
         Map<String,Par<String,Boolean>> infoAlunos = GestorTurnos.getInfoAlunos();
         Iterator nomesUtilizador =infoAlunos.keySet().iterator();
-        Iterator info = infoAlunos.values().iterator();
         int i = 0;
-        
         DefaultTableModel model = new DefaultTableModel(new Object[]{"Utilizador","Nome","Estatuto"} ,infoAlunos.size());
         jTable1.setModel(model);
         while(nomesUtilizador.hasNext()){
             String auxNomeUtilizador = (String)nomesUtilizador.next();
-            Par<String,Boolean> auxInfo = (Par<String,Boolean>) info.next();
+            Par<String,Boolean> auxInfo =  infoAlunos.get(auxNomeUtilizador);
             jTable1.setValueAt(auxNomeUtilizador,i,0);
             jTable1.setValueAt(auxInfo.getEsquerda(),i,1);
             jTable1.setValueAt(auxInfo.getDireita()?"Especial":"Normal",i,2);

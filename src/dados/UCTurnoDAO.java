@@ -5,6 +5,7 @@
  */
 package dados;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -12,7 +13,9 @@ import java.util.Map;
 import negocio.Par;
 import negocio.RegistoPresencas;
 import negocio.Turno;
+import negocio.TurnoJaRegistadoException;
 import negocio.UC;
+import negocio.UCInexistenteException;
 import negocio.UCJaRegistadaException;
 
 public class UCTurnoDAO {
@@ -48,6 +51,14 @@ public class UCTurnoDAO {
         return info;
     }
     
+    public static List<Turno> getInfoTurnos(String abreviaturaUC){
+        List<Turno> turnos = new ArrayList();
+        UC uc = ucs.get(abreviaturaUC);
+        if(uc !=null)
+            return uc.getTurnos();
+        return turnos;
+    }
+    
     public List<RegistoPresencas> getPresencas() {
 	throw new UnsupportedOperationException();
     }
@@ -59,6 +70,14 @@ public class UCTurnoDAO {
     public List<Turno> getTurnos(String aNomeUC) {
 	throw new UnsupportedOperationException();
     }
+    
+    public static void inserirTurno(Par<String,Turno> ucTurno)throws UCInexistenteException,TurnoJaRegistadoException{
+        UC uc = ucs.get(ucTurno.getEsquerda());
+        System.out.println(ucTurno.getEsquerda());
+        if(uc == null)
+            throw new UCInexistenteException();
+        uc.inserirTurno(ucTurno.getDireita());
+    } 
         
     public static void put(UC uc) throws UCJaRegistadaException{
 	if(ucs.containsKey(uc.getAbreviatura()))

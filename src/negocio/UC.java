@@ -13,13 +13,13 @@ public class UC {
     private final String nome;
     private final int semestre;
     private String idResponsavel;
-    private List<Turno> turnos = new ArrayList<Turno>();
+    private List<Turno> turnos;
 
     public UC(String abreviatura, String nome, int semestre) {
         this.abreviatura = abreviatura;
         this.nome = nome;
         this.semestre = semestre;
-        this.turnos = null;
+        this.turnos = new ArrayList<Turno>();
         this.idResponsavel=null;
     }   
 
@@ -33,6 +33,16 @@ public class UC {
 
     public int getSemestre() {
         return semestre;
+    }
+    //WARNING:Não faz clone
+    public List<Turno> getTurnos(){
+        return turnos;
+    }
+    
+    public void inserirTurno(Turno turno) throws TurnoJaRegistadoException{
+        if(turnos.contains(turno))
+            throw new TurnoJaRegistadoException();
+        turnos.add(turno);
     }
     
 }

@@ -40,7 +40,7 @@ public class AlunoDAO {
             Aluno aluno;
 
             // Obter informações do aluno
-            PreparedStatement ps = c.prepareStatement("SELECT * FROM Aluno where Nome = ?");
+            PreparedStatement ps = c.prepareStatement("SELECT * FROM Aluno where NomeUtilizador = ?");
             ps.setString(1, nomeUtilizador);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {

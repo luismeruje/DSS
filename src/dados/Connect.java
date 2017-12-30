@@ -16,7 +16,7 @@ public class Connect {
     private static final String URL = "localhost:3306";
     private static final String SCHEMA = "gestorturnosdb";
     private static final String USERNAME = "root";
-    private static final String PASSWORD = "";
+    private static final String PASSWORD = "password";
     
     public static Connection connect() {
         try {

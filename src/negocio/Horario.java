@@ -12,9 +12,17 @@ public class Horario {
 	private LocalTime fim;
 	private int diaSemana;
 
-	public boolean horariosSobrepostos(Horario aHorario) {
-		throw new UnsupportedOperationException();
-	}
+    public Horario(LocalTime inicio, LocalTime fim, int diaSemana) {
+        this.inicio = inicio;
+        this.fim = fim;
+        this.diaSemana = diaSemana;
+    }
+        
+        
+        
+    public boolean horariosSobrepostos(Horario aHorario) {
+        throw new UnsupportedOperationException();
+    }
 
 	public int getDiaSemana() {
 		return this.diaSemana;

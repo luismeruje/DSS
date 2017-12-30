@@ -9,6 +9,7 @@ import dados.*;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -27,12 +28,11 @@ public class GestorTurnos {
     public static Map<String,Par<String,Integer>> getInfoUCs(){
         return UCTurnoDAO.getInfoUCs();
     }
-    //TODO: inserir método no vpp
     
-    public static void inserirAdministrador(String nomeUtilizador, String password)throws UtilizadorJaRegistadoException, SQLException, ConnectionErrorException{
-        Admin administrador = new Admin(nomeUtilizador,password);
-        AdminDAO.put(administrador);
+    public static List<Turno>getInfoTurnos(String UC){
+        return UCTurnoDAO.getInfoTurnos(UC);
     }
+
     
     public static void inserirAluno(String nome, String nomeUtilizador, String password, Boolean estatuto) throws UtilizadorJaRegistadoException, ConnectionErrorException, SQLException{
         AlunoDAO.put(new Aluno(nome,nomeUtilizador,password,estatuto));
@@ -74,6 +74,31 @@ public class GestorTurnos {
         return jaRegistados;
     }
     
+    public static void inserirTurno(Par<String,Turno> turno)throws UCInexistenteException,TurnoJaRegistadoException{
+        UCTurnoDAO.inserirTurno(turno);
+    }
+    
+    public static List<Par<String,Integer>> inserirTurnos(String path)throws IOException,FicheiroCorrompidoException,UCInexistenteException{
+        Map<String,List<Turno>>todosTurnos = Parser.parseFicheiroTurnos(path);
+        List<Par<String,Integer>> jaRegistados = null;
+        Iterator it = todosTurnos.keySet().iterator();
+        while(it.hasNext()){
+            String nomeUC = (String)it.next();
+            for(Turno t: todosTurnos.get(nomeUC)){
+                try{
+                    GestorTurnos.inserirTurno(new Par(nomeUC,t));
+                }
+                catch(TurnoJaRegistadoException e){
+                    if(jaRegistados == null){
+                        jaRegistados = new ArrayList();
+                    }
+                    jaRegistados.add(new Par(nomeUC,t.getNumero()));
+                }
+            }
+        }
+        return jaRegistados;
+    }
+    
     public static void inserirUC(String abreviatura, String nome, int semestre) throws UCJaRegistadaException{
         UCTurnoDAO.put(new UC(abreviatura, nome,semestre));
     }
@@ -95,6 +120,7 @@ public class GestorTurnos {
         }
         return jaRegistadas;
     }
+    
     
     //TODO: meter exceptions no vpp
     public static Utilizador login(String nomeUtilizador, String password) throws PasswordIncorretaException,ContaInexistenteException, ConnectionErrorException, SQLException{
@@ -118,6 +144,7 @@ public class GestorTurnos {
             }
         
         Admin admin = AdminDAO.get(nomeUtilizador);
+        System.out.println(admin);
         if(admin!=null){
             if(!verificaPassword(admin,password))
                 throw new PasswordIncorretaException();
