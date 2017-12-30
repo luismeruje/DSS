@@ -56,7 +56,7 @@ public class GestorTurnos {
     }
     
     //@return Lista com pares que contêm o nome de utilizador e nome, de cada docente registado no sistema. 
-    public static List<Par<String,String>> getInfoDocentes(){
+    public static List<Par<String,String>> getInfoDocentes() throws ConnectionErrorException, SQLException{
         return DocenteDAO.getInfoDocentes();
     }
     
@@ -90,10 +90,10 @@ public class GestorTurnos {
         }
         return jaRegistados;
     }
-    public static void inserirDocente(String nome, String nomeUtilizador, String password) throws UtilizadorJaRegistadoException{
+    public static void inserirDocente(String nome, String nomeUtilizador, String password) throws UtilizadorJaRegistadoException, ConnectionErrorException, SQLException{
         DocenteDAO.put(new Docente(nome,nomeUtilizador,password));
     }
-    public static List<String> inserirDocentes(String path) throws IOException, FicheiroCorrompidoException{
+    public static List<String> inserirDocentes(String path) throws IOException, FicheiroCorrompidoException, ConnectionErrorException, SQLException{
         List<Docente> docentes = Parser.parseFicheiroDocentes(path);
         List<String> jaRegistados = null;
         for(Docente d: docentes){
@@ -171,6 +171,7 @@ public class GestorTurnos {
         }
         catch (ContaInexistenteException e) {}
         
+        try {
             Docente docente = DocenteDAO.get(nomeUtilizador);
             if(docente != null){
                 if(!verificaPassword(docente,password))
@@ -178,6 +179,8 @@ public class GestorTurnos {
                 else
                     return docente;
             }
+        }
+        catch (ContaInexistenteException e) {}
         
         Admin admin = AdminDAO.get(nomeUtilizador);
         if(admin!=null){

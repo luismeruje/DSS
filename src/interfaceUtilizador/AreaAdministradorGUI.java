@@ -145,9 +145,15 @@ public class AreaAdministradorGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        JFrame novoUserFrame = new GerirDocentesGUI();
-        novoUserFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        novoUserFrame.setVisible(true);
+        try {
+            JFrame novoUserFrame = new GerirDocentesGUI();
+            novoUserFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            novoUserFrame.setVisible(true);
+        } catch (ConnectionErrorException ex) {
+            Logger.getLogger(AreaAdministradorGUI.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(AreaAdministradorGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed

@@ -7,10 +7,14 @@ package interfaceUtilizador;
 
 import java.awt.event.WindowEvent;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import negocio.ConnectionErrorException;
 import negocio.FicheiroCorrompidoException;
 import negocio.GestorTurnos;
 
@@ -129,6 +133,10 @@ public class AdicionarDocentesGUI extends javax.swing.JFrame {
         catch(IOException e){}
         catch(FicheiroCorrompidoException e){
             JOptionPane.showMessageDialog(this,"Ficheiro corrompido.","Erro",JOptionPane.ERROR_MESSAGE);
+        } catch (ConnectionErrorException ex) {
+            Logger.getLogger(AdicionarDocentesGUI.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(AdicionarDocentesGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 

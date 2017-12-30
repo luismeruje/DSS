@@ -7,10 +7,14 @@ package interfaceUtilizador;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
+import negocio.ConnectionErrorException;
 import negocio.GestorTurnos;
 import negocio.Par;
 
@@ -23,7 +27,7 @@ public class GerirDocentesGUI extends javax.swing.JFrame {
     /**
      * Creates new form GerirDocentesGUi
      */
-    public GerirDocentesGUI() {
+    public GerirDocentesGUI() throws ConnectionErrorException, SQLException {
         initComponents();
         List<Par<String,String>> infoDocentes = GestorTurnos.getInfoDocentes();
         Iterator it =infoDocentes.iterator();
@@ -173,10 +177,16 @@ public class GerirDocentesGUI extends javax.swing.JFrame {
         novoUserFrame.addWindowListener(new WindowAdapter(){
             @Override
             public void windowClosed(WindowEvent e){
-                JFrame novoUserFrame2 = new GerirDocentesGUI();
-                novoUserFrame2.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                dispose();
-                novoUserFrame2.setVisible(true);
+                try {
+                    JFrame novoUserFrame2 = new GerirDocentesGUI();
+                    novoUserFrame2.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                    dispose();
+                    novoUserFrame2.setVisible(true);
+                } catch (ConnectionErrorException ex) {
+                    Logger.getLogger(GerirDocentesGUI.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SQLException ex) {
+                    Logger.getLogger(GerirDocentesGUI.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
         novoUserFrame.setVisible(true);
