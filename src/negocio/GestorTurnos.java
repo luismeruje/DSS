@@ -40,7 +40,6 @@ public class GestorTurnos {
                 for(Par p: alocacoesAluno){
                     GestorTurnos.alocarTurnoAAluno(p,nomeUtilizadorAluno);
                     Turno testeTurno=UCTurnoDAO.getTurno(p);
-                    System.out.println(testeTurno.getAlunos().get(0));
                 }
         }
     }
