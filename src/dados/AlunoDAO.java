@@ -53,7 +53,7 @@ public class AlunoDAO {
                 throw new ContaInexistenteException();
 
             // Obter turnos e respetivas UC's a que o aluno está inscrito
-            ps = c.prepareStatement("SELECT Turno.Numero.UCAbreviatura FROM Turno"
+            ps = c.prepareStatement("SELECT Numero, UCAbreviatura FROM Turno"
                                         +"INNER JOIN Aluno_Turno on Turno.idTurno = Aluno_Turno.Turno_idTurno"
                                         +"WHERE Aluno_Turno.Aluno_NomeUtilizador = ?");
             ps.setString(1, nomeUtilizador);
@@ -67,10 +67,10 @@ public class AlunoDAO {
             }
 
             // Obter propostas relacionadas com o aluno
-            ps = c.prepareStatement("SELECT PropostaTroca.idPropostaTroca FROM PropostaTroca"
-                                       + "WHERE Proponente_NrAluno = ? or Oblato_NrAluno = ?");
-            ps.setInt(1, aluno.getNrAluno());
-            ps.setInt(2, aluno.getNrAluno());
+            ps = c.prepareStatement("SELECT idPropostaTroca FROM PropostaTroca"
+                                       + "WHERE Proponente_NomeUtilizador = ? or Oblato_NomeUtilizador = ?");
+            ps.setString(1, nomeUtilizador);
+            ps.setString(2, nomeUtilizador);
             rs = ps.executeQuery();
             while (rs.next())
                 aluno.adicionarProposta(rs.getInt("idPropostaTroca"));
