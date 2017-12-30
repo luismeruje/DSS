@@ -47,9 +47,7 @@ public class AlunoDAO {
                 String nome = rs.getString("Nome");
                 String password = rs.getString("Password");
                 boolean estatuto = rs.getBoolean("Estatuto");
-                int nrAluno = rs.getInt("NrAluno");
                 aluno = new Aluno(nome, nomeUtilizador, password, estatuto);
-                aluno.setNrAluno(nrAluno);
             }
             else
                 throw new ContaInexistenteException();
@@ -108,17 +106,16 @@ public class AlunoDAO {
     public static void put(Aluno aluno) throws UtilizadorJaRegistadoException, ConnectionErrorException, SQLException {
         Connection c = Connect.connect();
         if (c != null) {
-            PreparedStatement ps = c.prepareStatement("SELECT * FROM Aluno WHERE Aluno.NrAluno = ?");
-            ps.setInt(1, aluno.getNrAluno());
+            PreparedStatement ps = c.prepareStatement("SELECT * FROM Aluno WHERE NomeUtilizador = ?");
+            ps.setString(1, aluno.getNomeUtilizador());
             ResultSet rs = ps.executeQuery();
             if (!rs.next()) {
-                PreparedStatement insertStmt = c.prepareStatement("INSERT INTO Aluno (NrAluno, Estatuto, Nome, NomeUtilizador, Password)"
-                                                                    + "VALUES (?, ?, ?, ?, ?)");
-                insertStmt.setInt(1, aluno.getNrAluno());
+                PreparedStatement insertStmt = c.prepareStatement("INSERT INTO Aluno (NomeUtilizador, Estatuto, Nome, Password)"
+                                                                    + "VALUES (?, ?, ?, ?)");
+                insertStmt.setString(1, aluno.getNomeUtilizador());
                 insertStmt.setBoolean(2, aluno.getEstatuto());
                 insertStmt.setString(3, aluno.getNome());
-                insertStmt.setString(4, aluno.getNomeUtilizador());
-                insertStmt.setString(5, aluno.getPassword());
+                insertStmt.setString(4, aluno.getPassword());
                 int numRows = insertStmt.executeUpdate();
             }
             else

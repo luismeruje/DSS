@@ -47,7 +47,7 @@ public class AdminDAO {
         ps.setString(1, administrador.getNomeUtilizador());
         ResultSet rs = ps.executeQuery();
         if (!rs.next()) {
-          PreparedStatement insertStmt = c.prepareStatement("INSERT INTO Admin (idAdmin, Nome, NomeUtilizador, Password) VALUES (1, 'Administrador', ?, ?)");
+          PreparedStatement insertStmt = c.prepareStatement("INSERT INTO Admin (NomeUtilizador, Password) VALUES (?, ?)");
           insertStmt.setString(1, administrador.getNomeUtilizador());
           insertStmt.setString(2, administrador.getPassword());
           int numRows = insertStmt.executeUpdate();
