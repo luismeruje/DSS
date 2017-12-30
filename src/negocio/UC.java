@@ -23,7 +23,10 @@ public class UC {
         this.idResponsavel=null;
     }   
     public void adicionarAlunoATurno(int numero,String nomeUtilizadorAluno){
-        Turno turno = turnos.get(numero);
+        Turno turno = null;
+        for(Turno t:turnos)
+            if(t.getNumero()==numero)
+                turno=t;
         turno.adicionarAluno(nomeUtilizadorAluno);
     }
     
